@@ -1,75 +1,95 @@
-# 🐧 Linux – setup_swap.sh
-## 🔧 Features:
+# 🧠 Advanced Swap / Page File Manager Scripts
 
-    Automatically disables any active swap.
+Automate swap setup for **Linux (Btrfs compatible)** and **Windows (Page File configuration)** environments with these cross-platform scripts. Useful for performance tuning, RAM-limited systems, and virtual environments.
 
-    Creates a Btrfs-compatible swap file (no Copy-On-Write).
+---
 
-    Allows custom swap size (e.g., 4G, 8G, 16G).
+## 🐧 Linux – `setup_swap.sh`
 
-    Sets vm.swappiness to control how aggressively Linux uses swap.
+### 🔧 Features
 
-    Adds the swap file to /etc/fstab for auto-mounting at boot.
+- ❌ Disables any existing swap.
+- 📦 Creates a **Btrfs-compatible swap file** (Copy-On-Write disabled).
+- 📏 Supports **custom swap sizes** (e.g., `4G`, `8G`, `16G`).
+- 🎯 Sets `vm.swappiness` (how aggressively Linux uses swap).
+- 🔁 Automatically adds swap to `/etc/fstab` for persistence.
+- 🧹 Optional swap **removal** or **status-only check**.
+- 💪 Force mode to **recreate** swap file if needed.
 
-    Option to remove or only check swap status.
+---
 
-## ✅ How to Use:
+### ✅ Usage Instructions
 
-    Open terminal.
+#### 1. Make the script executable:
 
-    Make it executable:
 ```bash
 chmod +x setup_swap.sh
-```
 
-## Run with desired size and swappiness:
-    ```bash
-    sudo ./setup_swap.sh 8G 60
-    ```
+2. Run with your desired swap size and swappiness:
 
-## Extra Options:
+sudo ./setup_swap.sh 8G 60
 
-    Show current swap status only:
-```bash
+Argument	Description
+8G	Swap file size
+60	Swappiness value (0–100)
+🧩 Extra Options
+🔍 Show current swap status only:
+
 ./setup_swap.sh --status-only
-```
 
-## Remove current swap file:
-```bash
+🗑️ Remove current swap file:
+
 ./setup_swap.sh --remove
-```
 
-## Force recreation even if file already exists:
+💪 Force recreation (even if file exists):
 
-  ```bash
-    ./setup_swap.sh 8G 60 --force
-```
+sudo ./setup_swap.sh 8G 60 --force
 
-# 🪟 Windows – setup_pagefile.bat
-## 🔧 Features:
+🪟 Windows – setup_pagefile.bat
+🔧 Features
 
-    Enables or disables Windows-managed Page File.
+    🧠 Enables or disables Windows-managed Page File.
 
-    Sets custom size for the virtual memory.
+    🔧 Sets a custom fixed size for virtual memory.
 
-    Removes old pagefile.sys and creates a new one.
+    ♻️ Removes and recreates pagefile.sys.
 
-    Shows current status of Page File.
+    📊 Shows current Page File configuration.
 
-## ✅ How to Use:
+✅ Usage Instructions
 
-    Right-click → Run as Administrator
+    🛑 Must run as Administrator
 
-    By default, the file will:
+1. Right-click → Run as Administrator
+2. Default behavior:
 
-        Set a fixed page file of 8GB on drive C:\
+    Fixed 8GB Page File on drive C:\
 
-        You can change values inside the script:
+    Automatically reconfigures system settings.
 
-        set "SIZE_MB=8192"
-        set "AUTOMATIC=0"
-        set "DRIVE=C:"
+⚙️ Customization
 
-To let Windows manage the pagefile automatically:
+To modify behavior, edit the following lines inside the .bat file:
+
+set "SIZE_MB=8192"   :: Page file size in MB
+set "AUTOMATIC=0"    :: Set to 1 for Windows to auto-manage
+set "DRIVE=C:"       :: Target drive
+
+🧠 Let Windows auto-manage the Page File:
 
 set "AUTOMATIC=1"
+
+📎 Notes
+
+    These scripts are best used on fresh setups or when fine-tuning performance.
+
+    Backup important data before altering system-level memory settings.
+
+    Btrfs users must avoid Copy-On-Write for swap — handled automatically in this script.
+
+📄 License
+
+MIT License
+🙋‍♂️ Author
+
+HamdyMohamedak – Passionate about performance, systems, and automation.
